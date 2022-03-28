@@ -17,13 +17,16 @@ import javax.inject.Singleton
 @InstallIn(ActivityComponent::class)
 object MainModule {
 
-    //Use @activity scoped & not @singleton while dealing with Activity components
-    //The string lives as long as the activity but we only have a single instance of it
+    //Use @activity scoped & not @singleton while dealing with Activity components i.e.
+    //The string lives as long as the activity but we will only have a single instance of it
     @ActivityScoped
     @Provides
     @Named("String2")
     fun provideTestString2(
-        //Will use the context that we can get from our application class i.e MyApplication.kt
-        @ApplicationContext context : Context
-    ) = context.getString(R.string.string_to_inject)
+        //Passing the value of test string 1 in the AppModule as the input for test string 2
+        //Will use the context that we can get from our application class i.e MyApplication.kt so as to be able to get our string from the string resources
+        //Dagger hilt will figure out the order in which to provide the dependencies so that it can construct them in the right way
+        @ApplicationContext context : Context,
+        @Named("String1") testString1 : String
+    ) = "${context.getString(R.string.string_to_inject)} - $testString1"
 }
