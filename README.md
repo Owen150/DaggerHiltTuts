@@ -1,2 +1,2 @@
 # DaggerHiltTuts
-Dagger Hilt practice project
+Dependency Injection using Dagger Hilt - Practice project
